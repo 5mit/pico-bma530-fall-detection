@@ -1,0 +1,5 @@
+
+integrate into func calls more
+
+fix buffer sending over tcp, weirdness with char
+fix recv json not being recognized
