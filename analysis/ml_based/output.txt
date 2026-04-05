@@ -1,0 +1,11 @@
+ python rf_train_test.py -tr ../data/rf_train_test/train_features.csv -te ../data/rf_train_test/test_features.csv -n 30
+Random Forest Accuracy: 96.20%
+Classification Report:
+              precision    recall  f1-score   support
+
+           0       0.92      0.96      0.94        25
+           1       0.98      0.96      0.97        54
+
+    accuracy                           0.96        79
+   macro avg       0.95      0.96      0.96        79
+weighted avg       0.96      0.96      0.96        79

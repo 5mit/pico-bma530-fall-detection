@@ -1,0 +1,4 @@
+Found fall files: 269
+Found nonfall files: 122
+Training samples: 312, Testing samples: 79
+Files copied to ../data/rf_train_test/train_files and ../data/rf_train_test/test_files

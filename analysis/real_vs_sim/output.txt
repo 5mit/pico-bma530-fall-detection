@@ -1,0 +1,79 @@
+python real_vs_sim_compare.py -r real/ -s sim/
+Real samples: 5, Simulated samples: 6
+
+Feature: mag_mean
+Real: mean 124313501.036, std 18190908.966
+Sim:  mean 103619428.441, std 25190143.702
+
+Feature: mag_mad
+Real: mean 113364550.316, std 24591089.675
+Sim:  mean 77101352.558, std 31198159.919
+
+Feature: mag_max
+Real: mean 1309033143.000, std 494290667.576
+Sim:  mean 894503677.500, std 467760287.483
+
+Feature: mag_min
+Real: mean 777127.400, std 447973.686
+Sim:  mean 965945.333, std 1304750.804
+
+Feature: mag_range
+Real: mean 1308256015.600, std 494459607.061
+Sim:  mean 893537732.167, std 467010062.356
+
+Feature: freefall_samples
+Real: mean 25.600, std 6.189
+Sim:  mean 22.833, std 2.483
+
+Feature: impact_mag
+Real: mean 898154770.600, std 672093429.212
+Sim:  mean 578936571.833, std 488661523.397
+
+Feature: pre_impact_mean
+Real: mean 183196575.240, std 32956308.572
+Sim:  mean 144628921.267, std 109795359.073
+
+Feature: pre_impact_mad
+Real: mean 154646712.512, std 44770015.644
+Sim:  mean 101799361.073, std 96705509.678
+
+Feature: post_impact_mean
+Real: mean 221985488.240, std 127041250.563
+Sim:  mean 136957882.575, std 75409457.427
+
+Feature: post_impact_mad
+Real: mean 174057806.652, std 134502066.686
+Sim:  mean 76991554.065, std 68286386.539
+
+Feature: impact_rise
+Real: mean 889702491.800, std 670548581.276
+Sim:  mean 557889492.833, std 464401890.981
+
+Feature: jerk_max
+Real: mean 914643970.000, std 417875084.531
+Sim:  mean 722022871.667, std 440056472.350
+
+Feature: jerk_mean_abs
+Real: mean 50029418.641, std 11797576.083
+Sim:  mean 55927478.789, std 27236257.036
+
+Feature: label
+Real: mean 1.000, std 0.000
+Sim:  mean 1.000, std 0.000
+
+Kolmogorov-Smirnov test (distribution similarity)
+mag_mean: KS stat=0.633, p=0.177
+mag_mad: KS stat=0.633, p=0.177
+mag_max: KS stat=0.400, p=0.688
+mag_min: KS stat=0.500, p=0.357
+mag_range: KS stat=0.400, p=0.688
+freefall_samples: KS stat=0.600, p=0.238
+impact_mag: KS stat=0.433, p=0.591
+pre_impact_mean: KS stat=0.500, p=0.357
+pre_impact_mad: KS stat=0.667, p=0.108
+post_impact_mean: KS stat=0.433, p=0.591
+post_impact_mad: KS stat=0.433, p=0.591
+impact_rise: KS stat=0.433, p=0.591
+jerk_max: KS stat=0.400, p=0.688
+jerk_mean_abs: KS stat=0.500, p=0.357
+label: KS stat=0.000, p=1.000

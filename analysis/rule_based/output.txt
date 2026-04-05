@@ -1,0 +1,9 @@
+Summary:
+Total files: 79
+Detected events: 62
+Detection rate: 78.48%
+Accuracy: 77.22%
+True Negative Rate: 15.19%
+False Positive Rate: 16.46%
+False Negative Rate: 6.33%
+True Positive Rate: 62.03%
