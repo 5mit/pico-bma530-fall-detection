@@ -1,8 +1,6 @@
 # Evaluating Rule-Based vs. ML Confirmation for Interrupt-Driven Embedded Fall Detection (Pico W + BMA530)
 
-This project implements and evaluates 2 different interrupt based, embedded fall detection systems. The goal of these systems is to be low power and allow for easy integration into other real-time embedded systems while maintaining maximum fall detection accuracy. 
-
-Thus, these two fall detection systems are interrupt driven (non-polling) to free up the MCU as much as possible for other tasks or low-power operation.
+This project implements and evaluates 2 different interrupt based, embedded fall detection systems. The goal of these systems is to be low power and allow for easy integration into other real-time embedded systems while maintaining maximum fall detection accuracy. Thus, these two fall detection systems are interrupt driven (non-polling) to free up the MCU as much as possible for other tasks or low-power operation.
 
 The first system is purely rule-based, working off a state machine which is updated by accelerometer interrupts. The second system uses an accelerometer interrupt to detect free-fall, and then confirms if the event was a fall by passing the accelerometer's FIFO buffer into an pretrained ML model.
 
