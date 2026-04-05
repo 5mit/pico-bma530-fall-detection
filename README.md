@@ -46,14 +46,21 @@ The embedded platform for this project is a Raspberry Pi Pico W connected to a B
 ###Pico W GPIO Mapping:
 
 ####I2C (to BMA530):
+
 - GPIO 20: SDA
 - GPIO 21: SCL
+
 ####BMA530 Interrupt Pins:
+
 - GPIO 19: INT1
 - GPIO 18: INT2
+
 ####BMA530 Power Control:
+
 - GPIO 17: Mosfet Gate 
+
 ####LED:
+
 - GPIO 8: Red LED
 - GPIO 9: Green LED
 - GPIO 10: Blue LED
