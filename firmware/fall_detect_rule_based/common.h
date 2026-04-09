@@ -10,6 +10,24 @@
 #define debug_printf(...) do {} while(0) // Safe no-op which is optimized out in release builds
 #endif
 
+
+/*
+ ***************************************************************************
+ *  Network Settings (Debug)
+ ***************************************************************************
+ */
+extern char *tcp_send_buff;
+
+#define FALL_WINDOW_SIZE 2048
+
+#define WIFI_SSID "fall-detect-data-trans"
+#define WIFI_PASS "GoodPasswordLOL"
+#define SERVER_IP "192.168.0.100"
+#define SERVER_PORT 3045
+#define RECV_BUFF_SIZE 128
+
+#define TCP_MSG_SIZE 1024
+
 /*
  ***************************************************************************
  * GPIO Mapping

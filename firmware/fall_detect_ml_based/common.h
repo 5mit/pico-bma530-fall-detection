@@ -12,6 +12,12 @@
 #endif
 
 extern semaphore_t sem;
+
+/*
+ ***************************************************************************
+ *  Network Settings (Debug)
+ ***************************************************************************
+ */
 extern char *tcp_send_buff;
 
 #define FALL_WINDOW_SIZE 2048

@@ -29,18 +29,18 @@ set(PICO_BOARD pico_w CACHE STRING "Board type")
 # Pull in Raspberry Pi Pico SDK (must be before project)
 include(pico_sdk_import.cmake)
 
-project(fall_detect_thresh C CXX ASM)
+project(fall_detect_rule_based C CXX ASM)
 
 # Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
 
-set(target_name fall_detect_thresh)
+set(target_name fall_detect_rule_based)
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(${target_name} fall_detect_thresh.c common.c acc.c )
+add_executable(${target_name} fall_detect_rule_based.c common.c acc.c setup_wifi.c tcp.c )
 
-pico_set_program_name(${target_name} "fall_detect_thresh")
+pico_set_program_name(${target_name} "fall_detect_rule_based")
 pico_set_program_version(${target_name} "0.1")
 
 # Modify the below lines to enable/disable output over UART/USB
@@ -51,6 +51,7 @@ pico_enable_stdio_usb(${target_name} 0)
 target_link_libraries(${target_name}
         pico_stdlib
         hardware_i2c
+        pico_cyw43_arch_lwip_threadsafe_background
 )
 
 # Add the standard include files to the build

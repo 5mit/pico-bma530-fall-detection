@@ -12,7 +12,6 @@
 #include "acc.h"
 #include "common.h"
 #include "setup_wifi.h"
-#include "pico/sync.h"
 #include "hardware/gpio.h"
 #include "tcp.h"
 
@@ -22,9 +21,10 @@ void reset() {
     sys_reset();
 }
 
-int main() {   
+int main()
+{   
     watchdog_enable(WATCHDOG_DELAY_MS, false);
-
+    
     gpio_init(ACC_PWR_CTRL_PIN);
     gpio_set_dir(ACC_PWR_CTRL_PIN, GPIO_OUT);
     gpio_put(ACC_PWR_CTRL_PIN, ACC_PWR_OFF);
@@ -33,8 +33,7 @@ int main() {
 
 #ifndef  NDEBUG
     stdio_init_all();
-
-    // Try 3 times to connect to wifi
+     // Try 3 times to connect to wifi
     int status = CYW43_LINK_DOWN;
     for (size_t i = 0; i < 3; ++i) {
         if((status = setup_default(CYW43_COUNTRY_CANADA, WIFI_SSID, WIFI_PASS, CYW43_AUTH_WPA3_WPA2_AES_PSK, "client-tag")) == CYW43_LINK_UP) {
@@ -52,28 +51,40 @@ int main() {
     ip4addr_aton(SERVER_IP, &server_ip);
     char recv_buff[RECV_BUFF_SIZE]; // Holds server response data
     tcp_send_buff = (char*)malloc(sizeof(char) * TCP_MSG_SIZE);
+    
 #endif
 
-    // Init BMA530 accelerometer 
     if(acc_init()) {
         reset();
     }
-
     set_single_led(GREEN_LED);
-    sem_init(&sem, 0, 1);
+    int err = 0;
     bool blue_led_state = false;
-
     while (true) {
         watchdog_update(); 
-        sleep_ms_or_until_sem(1000);
-        if(fall_occurred()) {
+        sleep_ms(1000);
+        if(fall_detected) {
             clear_leds();
-            gpio_put(BLUE_LED, blue_led_state = !blue_led_state);
-#ifndef NDEBUG
+            gpio_put(BLUE_LED, blue_led_state = !blue_led_state); 
+            if (!clear_fall_detected_flag()) {
+                acc_reset();
+                sleep_ms(200);
+                acc_init();
+            }
+            #ifndef NDEBUG
+            update_debug_msg();
             if (tcp_message_exchange(&cs, &server_ip, SERVER_PORT, tcp_send_buff, recv_buff) != ERR_OK) {
                 reset();
             }
-#endif
+            #endif
+        }
+        err = acc_test_poll();
+        //if (err == 0)
+            //err = acc_int_reset_ref();
+        if (err != 0) {
+            acc_reset();
+            sleep_ms(200);
+            acc_init();
         }
     }
 }

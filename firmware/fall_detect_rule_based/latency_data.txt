@@ -1,0 +1,41 @@
+Listening on 0.0.0.0:3045...
+Connected by ('192.168.0.118', 54098)
+Fall Time: 371817499    ff Time: 372139693      Latency: 0
+
+Sent JSON with Status = 0
+Connected by ('192.168.0.118', 54099)
+Fall Time: 377678915    ff Time: 378001290      Latency: 0
+
+Sent JSON with Status = 0
+Connected by ('192.168.0.118', 54100)
+Fall Time: 381949002    ff Time: 382291398      Latency: 0
+
+Sent JSON with Status = 0
+Connected by ('192.168.0.118', 54101)
+Fall Time: 385615231    ff Time: 385937417      Latency: 0
+
+Sent JSON with Status = 0
+Connected by ('192.168.0.118', 54102)
+Fall Time: 389744236    ff Time: 390066485      Latency: 0
+
+Sent JSON with Status = 0
+Connected by ('192.168.0.118', 54103)
+Fall Time: 393550976    ff Time: 393369680      Latency: 181296
+
+Sent JSON with Status = 0
+Connected by ('192.168.0.118', 54104)
+Fall Time: 397538316    ff Time: 397860545      Latency: 0
+
+Sent JSON with Status = 0
+Connected by ('192.168.0.118', 54105)
+Fall Time: 401183349    ff Time: 400981906      Latency: 201443
+
+Sent JSON with Status = 0
+Connected by ('192.168.0.118', 54106)
+Fall Time: 405110690    ff Time: 405453058      Latency: 0
+
+Listening on 0.0.0.0:3045...
+Connected by ('192.168.0.118', 54107)
+Fall Time: 482658223    ff Time: 482980602      Latency: 0
+
+Sent JSON with Status = 0

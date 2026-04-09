@@ -1,5 +1,6 @@
 // Implementation file for BMA530 Accelerometer functions
 
+#include <cstdint>
 #include <hardware/gpio.h>
 #include <hardware/sync.h>
 #include <hardware/timer.h>
@@ -34,8 +35,10 @@ i2c_inst_t *i2c;
 // accelerometer state variables
 
 volatile uint8_t fall_state = FALL_STATE_IDLE;
+
+#ifndef  NDEBUg
 volatile uint64_t free_fall_time = 0;
-volatile uint64_t fall_time = 0;
+#endif
 
 volatile bool free_fall_detected = false;
 
@@ -434,7 +437,9 @@ void handle_acc_int1_signal() {
     else {
         fall_state = FALL_STATE_FREE_FALL_DETECTED;
         free_fall_detected = true;
-        free_fall_time = time_us_64();
+    #ifndef NDEBUG
+        free_fall_time = time_us_64();  // Used for (t=0) in latency benchmark
+    #endif
         sem_release(&sem);
     }
 }
@@ -667,10 +672,24 @@ bool fall_occurred() {
     }
     debug_printf("fifo level %d\n", fifo_level);
     fall_features feats = fall_window_get_features(fall_window, sizeof(fall_window), fifo_level);
+        if (feats.max_consecutive_ff_count > 100) { // longer than 2 seconds in the air, automatically consider a fall
+        if (!clear_fall_detected_flag()) {
+            acc_reset();
+            sleep_ms(200);
+            acc_init();
+        }
+        return true;
+    }
+    float x[N_FEATURES];
+    flatten_features(&feats, x);
+    Eloquent::ML::Port::RandomForest rf;
+    int predicted_class = rf.predict(x);
 #ifndef NDEBUG
+    uint64_t latency = clamp_sub_u64(time_us_64(), free_fall_time);
     int chars_written = snprintf(tcp_send_buff, TCP_MSG_SIZE,
          "%f, %f, %f, %f, %f, %f, %f, %f,"\
-         "%f, %f, %f, %f, %f, %f, %f\n",
+         "%f, %f, %f, %f, %f, %f, %f\n"\
+         "Latency: %llu\n",
         feats.mag_mean,
         feats.mag_mad,
         feats.mag_max,
@@ -685,21 +704,9 @@ bool fall_occurred() {
         feats.post_impact_mad,
         feats.impact_rise,
         feats.jerk_max,
-        feats.jerk_mean_abs);
-#endif
-    if (feats.max_consecutive_ff_count > 100) { // :onger than 2 seconds in the air, automatically consider a fall
-        if (!clear_fall_detected_flag()) {
-            acc_reset();
-            sleep_ms(200);
-            acc_init();
-        }
-        return true;
-    }
-    float x[N_FEATURES]; // or however many features your model uses
-    flatten_features(&feats, x);
-    Eloquent::ML::Port::RandomForest rf;
-    int predicted_class = rf.predict(x);
-#ifndef NDEBUG
+        feats.jerk_mean_abs,
+        latency);
+
     snprintf(tcp_send_buff + chars_written, TCP_MSG_SIZE - chars_written, "Fall occured: %d\n", predicted_class);
 #endif
     if (!clear_fall_detected_flag()) {

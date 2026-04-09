@@ -59,4 +59,8 @@ void handle_acc_int1_signal();
 
 void handle_acc_int2_signal(); 
 
+#ifndef NDEBUG
+uint64_t update_debug_msg();
+#endif
+
 #endif

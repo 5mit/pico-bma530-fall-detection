@@ -499,7 +499,11 @@ void handle_acc_int2_signal() {
     if (fall_state == FALL_STATE_FREE_FALL_DETECTED && clamp_sub_u64(impact_time, free_fall_time) <= FREE_FALL_TO_IMPACT_TIMEOUT_US) {
         fall_state = FALL_STATE_IMPACT_DETECTED;
         fall_detected = true;
+        #ifndef NDEBUG
         fall_time = impact_time;
+        #else
+        fall_time = time_us_64(); // More accurate for latency calc
+        #endif
         debug_printf("***FALL_DETECTED***");
     }
     else {
@@ -507,3 +511,9 @@ void handle_acc_int2_signal() {
     }
 }
 
+#ifndef NDEBUG
+uint64_t update_debug_msg() {
+        uint64_t latency = clamp_sub_u64(fall_time, free_fall_time);
+        snprintf(tcp_send_buff, TCP_MSG_SIZE, "Fall Time: %llu\tff Time: %llu\tLatency: %llu\n", fall_time, free_fall_time, latency);
+}
+#endif

@@ -6,6 +6,7 @@
 #include <stdint.h>
 
 volatile bool acc_irq_enabled = false;
+char *tcp_send_buff;
 
 void init_leds() {
     gpio_init(RED_LED);
